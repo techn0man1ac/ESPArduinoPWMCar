@@ -1,5 +1,13 @@
-#define PWMA 6  // выходы arduino
-#define PWMB 11
+/*
+ESPArduinoPWMCar
+https://github.com/techn0man1ac/ESPArduinoPWMCar
+
+by Techn0man1ac Labs, 2021
+*/
+
+// драйвер моторов TB6612FNG
+#define PWMA 6  
+#define PWMB 11 
 #define AIN1 8
 #define AIN2 7
 #define BIN1 9
@@ -7,12 +15,12 @@
 #define STBY 12
 
 String inString = "";    // string to hold input
-int RightMotor = 0;
+int RightMotor = 0; // Тут скорость правого двигателя
 int LeftMotor = 0;
 
 void setup() {
-  Serial.begin(115200);
-  Serial.setTimeout(5);
+  Serial.begin(115200); // Скорость обмена между ESP8266 Arduino Nano должна быть одинаковая
+  Serial.setTimeout(5);  // 5 мс должно хватить на один символ
 
   pinMode(PWMA, OUTPUT);
   pinMode(PWMB, OUTPUT);
@@ -22,9 +30,9 @@ void setup() {
   pinMode(BIN2, OUTPUT);
   pinMode(STBY, OUTPUT);
 
-  digitalWrite(STBY, HIGH);
+  digitalWrite(STBY, HIGH); // Отключаю режим сна драйвера
 
-  for (int spd = 0; spd <= 255; spd++) { // плавный розгон
+  for (int spd = 0; spd <= 255; spd++) { // плавный тестовый прогон двигателей
     MtrsSpdSet(spd, spd); // чтобы не  было бросков напряжений и перезагрузок ардуины
     delay(5);
   }
@@ -36,37 +44,37 @@ void setup() {
     delay(10);
   }
 
-  Serial.println(" Start ");
+  Serial.println(" Start "); // Мы готовы принимать комманды
 }
 
 void loop()
 {
-  if (Serial.available() > 0) {
-    inString = Serial.readString();
+  if (Serial.available() > 0) { //Если в буфере UART'а есть что-то
+    inString = Serial.readString(); // Считываем содержимое в строку
 
-    if (inString.substring(0, 4) == "mr0 ") {
-      inString = inString.substring(4);
-      RightMotor = inString.toInt();
-      //Serial.print("RightMotor = ");
-      //Serial.println(RightMotor);
+    if (inString.substring(0, 4) == "mr0 ") { // Если полученая комманда начинается с "mr0 ", начинаем смотреть с нулевой позиции в строке, комманда занимает 4 символа
+      inString = inString.substring(4); // Если комманда получена, тогда смещаемся на 4 символа, и преображаем всё что после 4-го символа("mr0 ") в число типа Int(как отрицательное так и положительное)
+      RightMotor = inString.toInt(); 
+      //Serial.print("RightMotor = "); // Для отладки
+      //Serial.println(RightMotor); // Уже нет необходимости
     }
 
-    if (inString.substring(0, 4) == "ml0 ") {
+    if (inString.substring(0, 4) == "ml0 ") { // тоже что и выше 
       inString = inString.substring(4);
       LeftMotor = inString.toInt();
       //Serial.print("LeftMotor = ");
       //Serial.println(LeftMotor);
     }
-    inString = "";
+    inString = ""; // Очистка буфера, ведь мы уже обработали комманды
   }
-  MtrsSpdSet(RightMotor, LeftMotor);
+  MtrsSpdSet(RightMotor, LeftMotor); // Управляем двигателями, RightMotor, как и LeftMotor могут принимать значения -255..255, соответственно -255 это макс скорость в одну сторону, 255 - в другую
 }
 
 void MtrsSpdSet(int rMotor, int lMotor) {
   if (rMotor > 0) {
     digitalWrite(AIN1, HIGH);
     digitalWrite(AIN2, LOW);
-  } else if (rMotor == 0) {
+  } else if (rMotor == 0) { // когада задаем нуль тогда используем режим " Stop", то есть допускается инерция, а не жёсткий тормоз
     digitalWrite(AIN1, LOW);
     digitalWrite(AIN2, LOW);
   } else if (rMotor < 0) {
@@ -87,7 +95,7 @@ void MtrsSpdSet(int rMotor, int lMotor) {
     digitalWrite(BIN2, LOW);
   }
 
-  analogWrite(PWMA, rMotor);
+  analogWrite(PWMA, rMotor); // тут задается скорость двигателей
   analogWrite(PWMB, lMotor);
 
   // AI1 -> HIGH, AI2 -> HIGH - Short Brake
