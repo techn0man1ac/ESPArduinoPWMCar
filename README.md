@@ -2,7 +2,7 @@
 
 ![RC car photo](https://raw.githubusercontent.com/techn0man1ac/ESPArduinoPWMCar/main/Pictures/DChnbkwoGWA.jpg "RC car photo")
 
-ESP8266 + Arduino Nano = RC car(PWM motor control)
+ESP8266(AP/UDP) + Arduino Nano = RC car(PWM motor control)
 
 ![RC car photo2](https://raw.githubusercontent.com/techn0man1ac/ESPArduinoPWMCar/main/Pictures/qoUpP_fSRvU.jpg "RC car photo2")
 
