@@ -1,4 +1,4 @@
-# ESPArduinoPWMCar
+# ESPArduinoPWMCar by Techn0man1ac
 
 ![RC car photo](https://raw.githubusercontent.com/techn0man1ac/ESPArduinoPWMCar/main/Pictures/DChnbkwoGWA.jpg "RC car photo")
 
@@ -10,4 +10,4 @@ ESP8266(AP/UDP) + Arduino Nano = RC car(PWM motor control)
 
 On Android using RoboRemoFree:
 
-https://play.google.com/store/apps/details?id=com.hardcodedjoy.roboremofree&hl=ru&gl=US
+https://play.google.com/store/apps/details?id=com.hardcodedjoy.roboremofree
