@@ -6,6 +6,10 @@ ESP8266(WiFi AP Mode / UDP) + Arduino Nano = RC car(PWM motor control)
 
 ![RC car photo2](https://raw.githubusercontent.com/techn0man1ac/ESPArduinoPWMCar/main/Pictures/qoUpP_fSRvU.jpg "RC car photo2")
 
+Schematic:
+
+![Schematic](https://raw.githubusercontent.com/techn0man1ac/ESPArduinoPWMCar/main/Pictures/20211015_181615.jpg "Schematic") 
+
 Video demonstration:
 
 https://youtu.be/BdUt7R5jvsc
